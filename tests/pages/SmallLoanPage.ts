@@ -1,7 +1,7 @@
 import { expect, Page } from '@playwright/test';
-import { TestButton } from '../atoms/TestButton';
-import { TestInput } from '../atoms/TestInput';
-import { LoginForm } from '../molecules/LoginForm';
+import { TestButton } from '../components/atoms/TestButton';
+import { TestInput } from '../components/atoms/TestInput';
+import { LoginForm } from '../components/molecules/LoginForm';
 
 export class SmallLoanPage {
   private readonly amount: TestInput;
@@ -45,6 +45,18 @@ export class SmallLoanPage {
     await expect(this.periodValue()).resolves.toBe('12');
     await expect(this.monthlyPayment).toHaveText('42.8 €');
   }
+
+  async expectCalculatorAfterLoanCalcResponse(hasBody: boolean): Promise<void> {
+    const errorMessage = this.page.getByTestId('id-small-loan-calculator-field-error');
+    await expect(errorMessage).not.toBeVisible();
+
+    await expect(this.monthlyPayment).toHaveText(hasBody ? '85.61 €' : 'undefined €');
+  }
+
+  async expectCalculatorError(): Promise<void> {
+    await expect(this.page.getByTestId('id-small-loan-calculator-field-error'))
+      .toHaveText('Oops, something went wrong');
+  }
 }
 
 export class LoanDetailsPage {
@@ -54,4 +66,5 @@ export class LoanDetailsPage {
     await expect(this.page).toHaveURL(/\/loan-decision$/);
     await expect(this.page.getByText('Loan Details', { exact: true })).toBeVisible();
   }
+
 }
