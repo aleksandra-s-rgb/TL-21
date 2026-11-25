@@ -1,15 +1,7 @@
-
-
-
-
 ---
-name:
-add-loan-test
-----
-description:
-Добавляет автотест Playwright для loan app, в том числе 
+name: add-loan-test
+description: Добавляет автотест Playwright для loan app, в том числе 
 ---
-
 #
 Добавление автотеста loan app
 -
