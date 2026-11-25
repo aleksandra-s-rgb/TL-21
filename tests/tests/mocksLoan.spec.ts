@@ -34,9 +34,11 @@ test.describe('Mocked loan-calc tests', async () => {
 
     });
 
-    test('TL-21-3 - check calculator error on 500 response with empty body', async ({page}) => {
+    test('TL-21-3 - check calculator error on 500 response without body', async ({page}) => {
         await page.route('**/api/loan-calc**', async route => {
-            await route.fulfill({status: 500, body: ''});
+            await route.fulfill({
+                status: 500
+            });
         });
 
         const loanCalcResponseWaiter = page.waitForResponse(
@@ -51,7 +53,9 @@ test.describe('Mocked loan-calc tests', async () => {
 
     test('TL-21-4 - check calculator on 200 response without body', async ({page}) => {
         await page.route('**/api/loan-calc**', async route => {
-            await route.fulfill({status: 200, body: ''});
+            await route.fulfill({
+                status: 200
+            });
         });
 
         const loanCalcResponseWaiter = page.waitForResponse(
